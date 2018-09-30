@@ -319,3 +319,21 @@ void rbTree_inPrint(RBT_Root* T, RB_TREE* t)
 	}
 	rbTree_inPrint(T, t->right);
 }
+
+
+void rbTree_prePrint(RBT_Root *T, RB_TREE* t)
+{
+	if (T->nil == t)
+	{
+		return;
+	}
+	if (t->color == RED)
+	{
+		printf("%dR ", t->key);
+	}
+	else{
+		printf("%dB ", t->key);
+	}
+	rbTree_prePrint(T, t->left);
+	rbTree_prePrint(T, t->right);
+}
