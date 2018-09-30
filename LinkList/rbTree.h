@@ -26,3 +26,4 @@ RB_TREE* rbtree_find_min(RBT_Root *T, RB_TREE *x);
 
 void rbtree_transplant(RBT_Root* T, RB_TREE* u, RB_TREE* v);
 void rbTree_inPrint(RBT_Root* T, RB_TREE* t);
+void rbTree_prePrint(RBT_Root *T, RB_TREE* t);
