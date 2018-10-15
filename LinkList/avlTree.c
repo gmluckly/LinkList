@@ -8,8 +8,6 @@
 bool AVLInsert(BiTree *T, TElemType key)
 {
 	BiTree t;
-
-
 	//如果当前查找的根结点为空树，表明查无此结点，故插入结点。
 	if (!*T)
 	{

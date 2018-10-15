@@ -36,6 +36,7 @@ void rbtree_insert(RBT_Root *T, int key)
 			return;
 		}
 	}
+	printf("p->key:%d", p->key);
 	x = (RB_TREE*)malloc(sizeof(RB_TREE));
 	x->color = RED;
 	x->key = key;
@@ -43,6 +44,7 @@ void rbtree_insert(RBT_Root *T, int key)
 	x->p = p;
 	//对新插入的结点，建立与其父结点之间的联系
 	if (T->root == T->nil){
+		x->color = BLACK;
 		T->root = x;
 	} else if (key < p->key)
 	{
@@ -57,7 +59,8 @@ void rbtree_insert(RBT_Root *T, int key)
 void RB_Insert_Fixup(RBT_Root* T, RB_TREE* x)
 {
 	//首先判断其父结点颜色为红色时才需要调整；为黑色时直接插入即可，不需要调整
-	while (x->p->color == RED)
+
+	while (x != NULL && x->p->color == RED)
 	{
 		// 由于还涉及到其叔叔结点，所以此处需分开讨论，确定父结点是祖父结点的左孩子还是右孩子
 		if (x->p = x->p->p->left){
@@ -71,20 +74,22 @@ void RB_Insert_Fixup(RBT_Root* T, RB_TREE* x)
 				x = x->p->p;
 			}
 			else{
-				//反之，如果叔叔结点颜色为黑色，此处需分为两种情况：1、当前结点时父结点的右孩子；
+				//反之，如果叔叔结点颜色为黑色，此处需分为两种情况：1、当前结点是父结点的右孩子；
 				//2、当前结点是父结点的左孩子
-				if (x= x->p->right)
+				if (x = x->p->right)
 				{
 					//第 2 种情况：当前结点时父结点的右孩子。解决方案：将父结点作为当前结点做左旋操作。
 					x = x->p;
-					rbTree_left_rotate(T,x);
+					if (x != NULL){
+						rbTree_left_rotate(T, x);
+					}
 				}
 				else{
 					//第 3 种情况：当前结点是父结点的左孩子。解决方案：将父结点颜色改为黑色，祖父结点颜色改为红色，
 					//从祖父结点处进行右旋处理。
 					x->p->color = BLACK;
 					x->p->p->color = RED;
-					rbTree_right_rotate(T,x->p->p);
+					rbTree_right_rotate(T, x->p->p);
 				}
 			}
 		}
@@ -100,7 +105,9 @@ void RB_Insert_Fixup(RBT_Root* T, RB_TREE* x)
 			else{
 				if (x = x->p->left){
 					x = x->p;
-					rbTree_right_rotate(T, x);
+					if (x != NULL){
+						rbTree_right_rotate(T, x);
+					}
 				}
 				else{
 					x->p->color = BLACK;
@@ -111,13 +118,15 @@ void RB_Insert_Fixup(RBT_Root* T, RB_TREE* x)
 		}
 
 	}
-	x->p->color = BLACK;
+	if (x != NULL){
+		x->p->color = BLACK;
+	}
 }
 
 //T表示为数根，x 表示为需要左旋转的子树根节点
 void rbTree_left_rotate(RBT_Root *T, RB_TREE *x)
 {
-	RB_TREE *y = x->left;
+	RB_TREE *y = x->right;
 	x->right = y->left;//将右子树的左孩子移动至结点 x 的右孩子处
 	if (x->right != T->nil) {//如果 x 的右子树不是nil，需重新连接 右子树的双亲结点为 x
 		x->right->p = x;
