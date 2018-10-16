@@ -73,8 +73,9 @@ int main()
 	RBT_Root *T = rbTreeInit();
 	rbtree_insert(T, 3);
 	rbtree_insert(T, 5);
-	rbtree_insert(T, 2);
 	rbtree_insert(T, 1);
+	rbtree_insert(T, 2);
+	rbtree_insert(T, 4);
 	printf("ÖÐÐò±éÀú £º");
 	rbTree_inPrint(T, T->root);
 	return 0;
