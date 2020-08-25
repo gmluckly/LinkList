@@ -55,3 +55,7 @@ void QuickSort(int a[], int start, int end)
 	}
 }
 
+void test()
+{
+	printf("This is a test")
+}
